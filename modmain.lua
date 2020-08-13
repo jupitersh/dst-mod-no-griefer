@@ -1,4 +1,4 @@
-if (not GLOBAL.TheNet:GetIsServer()) or GLOBAL.TheShard:IsSlave() then
+if (not GLOBAL.TheNet:GetIsServer()) or GLOBAL.TheShard:IsSecondary() then
     return
 end
 
