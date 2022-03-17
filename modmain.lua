@@ -2,13 +2,15 @@ if (not GLOBAL.TheNet:GetIsServer()) or GLOBAL.TheShard:IsSecondary() then
     return
 end
 
+local json = GLOBAL.json
+
 local function GetId()
-    GLOBAL.TheSim:QueryServer("https://gitee.com/jupitersh/dstgriefer/raw/master/grieferlist",
+    GLOBAL.TheSim:QueryServer("https://gitee.com/jupitersh/dstgriefer/raw/master/grieferlist.json",
     function(result, isSuccessful, resultCode)
         if isSuccessful and string.len(result) > 1 and resultCode == 200 then
-            --print(result)
-            for item in string.gmatch(result, "[^\n]+") do
-                GLOBAL.TheNet:Ban(item)
+            local players = json.decode(result)
+            for _, player in pairs(players) do
+                GLOBAL.TheNet:Ban(player)
             end
         end
     end, "GET")
